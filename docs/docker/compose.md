@@ -1,14 +1,22 @@
 # Docker Compose
 
-## Prerequisites
+## Dokploy / server (default)
 
-- Linux host with PulseAudio (user session socket under `/run/user/$UID/pulse`).
-- Copy `.env.example` to `.env` and set `HERMES_UID` / `HERMES_GID` from `id -u` and `id -g`.
-
-## Run
+Dokploy runs `docker compose -f ./docker-compose.yml`. Use `docker-compose.yml` in the repo root (not `.yaml`).
 
 ```bash
 docker compose up -d --build
+```
+
+Data is stored in the named volume `hermes-data` (portable on servers; no `~/.hermes` bind).
+
+## Local audio (optional)
+
+- Linux host with PulseAudio (`/run/user/$UID/pulse`).
+- Copy `.env.example` to `.env` and set `HERMES_UID` / `HERMES_GID` from `id -u` and `id -g`.
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.audio.yml up -d --build
 ```
 
 - Gateway API: http://localhost:8642
