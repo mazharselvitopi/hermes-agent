@@ -17,6 +17,9 @@ services:
       - hermes-data:/opt/data
     environment:
       - HERMES_DASHBOARD=1
+      # Required when the dashboard is exposed through Dokploy/Traefik.
+      # Add a reverse-proxy auth layer before using this on the public internet.
+      - HERMES_DASHBOARD_INSECURE=1
       # Set in Dokploy env or .env:
       # - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
       # - OPENAI_API_KEY=${OPENAI_API_KEY}
