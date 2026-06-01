@@ -13,6 +13,15 @@ services:
     ports:
       - "8642:8642"   # gateway API
       - "9119:9119"   # dashboard (only reached when HERMES_DASHBOARD=1)
+    labels:
+      - "traefik.http.middlewares.hermes-dashboard-auth.basicauth.users=mazhar:$$2y$$05$$meslbHpe/H4j0kdSqk5cfevR9uL3CSCMzdDbcgL1luBKxY68dgWES"
+      - "traefik.http.routers.hermes-dashboard-secure.rule=Host(`hermes.mazharselvitopi.com`)"
+      - "traefik.http.routers.hermes-dashboard-secure.entrypoints=websecure"
+      - "traefik.http.routers.hermes-dashboard-secure.tls=true"
+      - "traefik.http.routers.hermes-dashboard-secure.priority=1000"
+      - "traefik.http.routers.hermes-dashboard-secure.middlewares=hermes-dashboard-auth"
+      - "traefik.http.routers.hermes-dashboard-secure.service=hermes-dashboard"
+      - "traefik.http.services.hermes-dashboard.loadbalancer.server.port=9119"
     volumes:
       - hermes-data:/opt/data
     environment:
